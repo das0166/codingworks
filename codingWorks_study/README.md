@@ -104,4 +104,25 @@
         to{변경시킬 css 속성}
     }
     ```
+8. 가상클래스 : checked
+    - 폼 요소 checkbox와 radio를 클릭했을때 CSS 변경하는 방법
+    ```html
+    <input type="checkbox"><label>대학생</label>
+    ```
+    ```css
+    input[type=checkbox]:checked + label{
+        color:red;
+    }
+    ```
+    -> Input 태그 중에 type이 checkbox인 요소를 체크하면 인접해있는 label태그의 디자인을 변경한다는 의미<br>
+    ⭐인접 선택자와 형제 선택자는 HTML 구조상 위에 있는 요소는 선택할 수 없음. 아래에 있는 요소만 선택 가능
+9. ::after, ::before
+    - 인라인 요소로 사용
+    - 크기 값을 주기 위해선 블록 요소 또는 인라인 블록 요소로 변경해줘야 함. position:absolute;속성을 가지면 인라인블록 요소로 바뀌며 크기값을 줄 수 있음<br>
+    <b>⭐사용할때 content:''; 따옴표 안에 텍스트를 사용하지 않는 경우라도 반드시 있어야 다른 것들이 표시됨</b>
+    > :before HTML요소 :after
+10. 인라인 블록에 생기는 마진 없애는 방법
+    1. 네거티브 마진 오른쪽(margin-right)을 강제로 왼쪽으로 당기는 방법 -> margin-right:6px;
+    2. font-size:0;으로 설정(인라인 블록에 생긴 마진은 원래 폰트에서 생긴 문제이므로 폰트 크기를 0으로 하면 마진이 없어짐) - <b>이미지의 경우도 해당</b>
+    3. 이미지의 경우에만 해당! - 이미지는 아래쪽에도 마진이 발생하기때문에 display:block;을 주면 해결
 
