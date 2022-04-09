@@ -125,4 +125,66 @@
     1. 네거티브 마진 오른쪽(margin-right)을 강제로 왼쪽으로 당기는 방법 -> margin-right:6px;
     2. font-size:0;으로 설정(인라인 블록에 생긴 마진은 원래 폰트에서 생긴 문제이므로 폰트 크기를 0으로 하면 마진이 없어짐) - <b>이미지의 경우도 해당</b>
     3. 이미지의 경우에만 해당! - 이미지는 아래쪽에도 마진이 발생하기때문에 display:block;을 주면 해결
-
+11. flexbox
+    1. 개념과 사용하는 이유
+        - 기존의 float, position, display 속성을 사용해서 HTML 요소의 배치, 정렬, 방향, 순서, 크기를 조절하는 대신에 좀 더 쉽고 효율적으로 조절할 수 있음,  반응형 레이아웃을 만들기 쉬움
+    2. 플렉스 방식으로 수직중앙 수평중앙 배치하기
+        ```CSS
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        ```
+    3. 부모요소와 자식요소에 정의하는 flexbox 속성 정리
+        - 부모 요소(.parent)
+            - display:flex;
+            - justify-content:(flex-start/flex-end/center/space-between/space-around);
+            - align-items:(flex-start/flex-end/center/baseline/stretch);
+            - flex-direction:(row/column);
+            - flex-wrap:(wrap/nowrap/wrap-reverse);
+            - align-content:(flex-start/flex-end/center/space-between/space-around/stretch);
+        - 자식 요소(.child)
+            - flex:숫자(정수);
+            - order:숫자(정수);
+            - align-self:(auto/flex-start/flex-end/center/baseline/stretch);
+    4. 부모 요소 속성
+        - justify-content
+            - justify-content:(flex-start/center/flex-end); -> 자식 요소들의 좌측, 중앙, 우측 수평배치 변경
+            - justify-content:center; -> 여러 개의 자식요소가 좌우 간격이 없이 수평 중앙 정렬 
+            - justify-content:space-around; -> 여러 개의 자식요소끼리 좌우 간격을 일정하게 배분해서 수평 중앙에 정렬
+            - justify-content:space-between; -> 여러 개의 자식요소를 부모요소의 좌우 여백 없이 꽉 채우면서 중앙에 배치
+        - align-items
+            - align-items:(flex-start/flex-end/center); -> 자식 요소들의 상단, 중앙, 하단 수직배치 변경
+            - align-items:stretch; -> 자식 요소에 높이 값이 없으면 부모 요소 높이 값에 맞게 자동으로 100% 가득 채움
+        - flex-direction:(row/column); -> 가로배치, 세로배치
+            - flex-direction:(row/row-reverse); -> 자식 요소의 가로 정방향 배치(기본 값), 역방향 배치
+            - flex-direction:(column/column-reverse); -> 자식 요소의 세로 정방향 배치(기본 값), 역방향 배치
+        - flex-wrap:(wrap/nowrap/wrap-reverse); -> 부모요소의 너비값 안에서 줄바꿈 없이 배치할지 줄을 바꿀지 결정
+            - flex-wrap:nowrap; -> 부모요소 너비값이 줄어들어도 자식요소의 너비를 줄이면서 가로배치를 유지함.(기본값)
+            - flex-wrap:wrap; -> 부모요소의 너비값이 줄어들면 자식요소의 너비를 줄이지 않으면서 줄이 바뀌는 가로배치
+        > ❗ flex-flow : flex-direction 속성과 flex-wrap속성을 flex-flow라는 축약 속성으로 합칠 수 있음.<br>
+        ex) flex-flow : column nowrap;을 사용하면 자식 요소를 세로로 배치를 하되 부모 요소 너비값이 줄어들면 자식요소의 너비값을 줄이며 세로 배치 유지<br>
+        ex) flex-flow : row wrap;을 사용하면 자식 요소를 가로로 배치를 하되 부모 요소의 너비 값이 줄어들면 자식 요소의 너비를 그대로 유지하며 줄이 바뀜
+        - align-content:(flex-start/flex-end/center/space-between/space-around/stretch); -> 부모 요소에 wrap 속성이 있는 경우 여러 개의 자식 요소들의 간격 조절, 수직 수평 정렬을 변경
+            - align-content:flex-start; -> 자식 요소들의 줄이 바뀔 때 자식 요소들을 부모요소의 상단에 간격없이 정렬하게 배치
+            - align-content:flex-end; -> 자식 요소들의 줄이 바뀔 때 자식 요소들을 부모요소의 하단에 간격없이 정렬하게 배치
+            - align-content:flex-center; -> 자식 요소들의 줄이 바뀔 때 자식 요소들을 부모요소의 중앙에 간격없이 정렬하게 배치
+            - align-content:space-between; -> 자식 요소들의 줄이 바뀔 때 자식 요소들을 부모요소의 상단과 하단으로 붙여서 배치
+             - align-content:space-around; -> 자식 요소들의 줄이 바뀔 때 자식 요소들끼리 상하 간격을 일정하게 배분해서 수평 중앙에 배치
+    5. 자식 요소 속성
+        - flex(flex-grow, flex-shrink, flex-basis)
+            - flex-grow:숫자(정수); -> 플렉스 자식 요소의 증가 너비 비율을 설정(기본 값 flex-grow:0;)
+                - ex) 3개의 자식 요소에 flex-grow를 1,2,1을 주었다면 비율에 따라 25%(1/4), 50%(2/4), 25%(1/4)로 배정됨
+            - flex-shrink:숫자(정수); -> 플렉스 자식 요소의 감소 너비 비율을 설정
+            - flex-basis:숫자(정수); -> 플렉스 자식 요소의 공간 배분 전 기본 너비 설정
+                - flex-basis 요소의 width, height 등의 속성으로 Item의 너비를 설정할 수 있음(기본 값 flex-basis:auto;)
+            > ❗flex:flex-grow[증가 너비] flex-shrink[감소 너비] flex-basis[기본 너비]순으로 단축 속성이 가능함<br>
+            ex)flex:1 1 50px;(증가너비 감소너비 기본너비)<br>
+            ex)flex:1 1(증가너비 감소너비)<br>
+            ex)flex:1 50px;(증가너비 기본너비)<br>
+            💡flex 단축 속성에서 flex-grow를 제외하고 모두 생략 가능<br>
+            💡flex:1;로 작성하면 flex-grow:1;과 같은 뜻<br>
+            💡flex:1;과 flex:1 1;과 flex:1 1 0;은 같은 뜻<br>
+        - order:숫자(정수); -> 플렉스 자식 요소의 순서를 설정
+            - order:0;이 기본값
+        - align-self:(flex-start/flex-end/center/baseline/stretch); -> 부모 요소의 align-items와 별개로 개별 자식 요소들의 상단 중앙 하단 등 수직배치 변경
+        - margin:auto; margin-right:auto; margin-left:auto; -> margin 속성을 auto로 설정해 타 요소를 반대방향으로 밀어내 왼쪽 끝, 오른쪽 끝으로 배치
